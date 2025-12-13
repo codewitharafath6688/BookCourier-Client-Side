@@ -1,5 +1,6 @@
 import React from "react";
-import { NavLink } from "react-router";
+import { GiBookshelf } from "react-icons/gi";
+import { Link, NavLink } from "react-router";
 
 const Navber = () => {
   const links = <>
@@ -36,7 +37,10 @@ const Navber = () => {
             {links}
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">daisyUI</a>
+        <Link className="flex gap-2 items-center justify-center">
+            <GiBookshelf className="text-xl text-red-500"/>
+            <h2 className="text-2xl">BookCourier</h2>
+        </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
