@@ -11,10 +11,19 @@ const Register = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { createUser } = useAuth();
+  const { createUser, loginSocialUser } = useAuth();
   const handleSignUp = (data) => {
     console.log(data);
     createUser(data.email, data.password)
+      .then((result) => {
+        console.log(result.user);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const handleGoogleLogin = () => {
+    loginSocialUser()
       .then((result) => {
         console.log(result.user);
       })
@@ -115,7 +124,10 @@ const Register = () => {
             )}
 
             <button className="btn btn-neutral mt-4">SignUp</button>
-            <button className="btn mt-3 bg-white text-black border-[#e5e5e5]">
+            <button onClick={handleGoogleLogin}
+              type="button"
+              className="btn mt-3 bg-white text-black border-[#e5e5e5]"
+            >
               <svg
                 aria-label="Google logo"
                 width="16"
