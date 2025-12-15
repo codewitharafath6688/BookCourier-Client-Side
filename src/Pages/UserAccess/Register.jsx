@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { GiBookshelf } from "react-icons/gi";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { Link } from "react-router";
+import useAuth from "../../Hooks/useAuth";
 
 const Register = () => {
   const {
@@ -10,8 +11,16 @@ const Register = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const { createUser } = useAuth();
   const handleSignUp = (data) => {
     console.log(data);
+    createUser(data.email, data.password)
+      .then((result) => {
+        console.log(result.user);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   return (
     <div className="w-full h-full flex justify-between items-center">
