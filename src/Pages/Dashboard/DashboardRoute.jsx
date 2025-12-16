@@ -3,6 +3,7 @@ import { FaUserEdit } from "react-icons/fa";
 import { GiBookshelf } from "react-icons/gi";
 import { LiaFileInvoiceSolid } from "react-icons/lia";
 import { MdOutlineLocalLibrary, MdSpaceDashboard } from "react-icons/md";
+import { PiUsersThreeFill } from "react-icons/pi";
 import { TfiShoppingCartFull } from "react-icons/tfi";
 import { Link, Outlet } from "react-router";
 
@@ -97,6 +98,17 @@ const DashboardRoute = () => {
                 {/* Settings icon */}
                 <MdOutlineLocalLibrary />
                 <span className="is-drawer-close:hidden">Librarian's Approval</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/dashboard/management"
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="Users Active Role"
+              >
+                {/* Settings icon */}
+                <PiUsersThreeFill />
+                <span className="is-drawer-close:hidden">Users Active Role</span>
               </Link>
             </li>
             <li>

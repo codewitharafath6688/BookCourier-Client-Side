@@ -15,6 +15,7 @@ import Register from "../Pages/UserAccess/Register";
 import PrivateRoute from "./PrivateRoute";
 import Librarian from "../Pages/Librarian";
 import LibrarianApproval from "../Pages/Dashboard/LibrarianApproval";
+import Management from "../Pages/Dashboard/Management";
 
 export const router = createBrowserRouter([
     {
@@ -78,6 +79,10 @@ export const router = createBrowserRouter([
             {
                 path:'librarians-approval',
                 element: <LibrarianApproval></LibrarianApproval>
+            },
+            {
+                path:'management',
+                element: <Management></Management>
             }
         ]
     }
