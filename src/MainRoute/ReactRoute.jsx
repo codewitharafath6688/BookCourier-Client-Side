@@ -21,6 +21,7 @@ import AdminRoute from "./AdminRoute";
 import AddBook from "../Pages/Dashboard/AddBook";
 import LibrarianRoute from "./LibrarianRoute";
 import MyBooks from "../Pages/Dashboard/MyBooks";
+import Orders from "../Pages/Dashboard/Orders";
 
 export const router = createBrowserRouter([
     {
@@ -96,6 +97,10 @@ export const router = createBrowserRouter([
             {
                 path:'my-books',
                 element: <LibrarianRoute><MyBooks></MyBooks></LibrarianRoute>
+            },
+            {
+                path:'librarian-orders',
+                element: <LibrarianRoute><Orders></Orders></LibrarianRoute>
             }
         ]
     },

@@ -7,6 +7,7 @@ import { PiUsersThreeFill } from "react-icons/pi";
 import { TfiShoppingCartFull } from "react-icons/tfi";
 import { Link, Outlet } from "react-router";
 import useRole from "../../Hooks/useRole";
+import { LuSwatchBook } from "react-icons/lu";
 
 const DashboardRoute = () => {
   const { role } = useRole();
@@ -146,11 +147,11 @@ const DashboardRoute = () => {
                 </li>
                 <li>
                   <Link
-                    to="/dashboard/my-books"
+                    to="/dashboard/librarian-orders"
                     className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                     data-tip="Orders"
                   >
-                    <FaAddressBook />
+                    <LuSwatchBook />
                     <span className="is-drawer-close:hidden">Oders</span>
                   </Link>
                 </li>
