@@ -2,8 +2,10 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { GiBookshelf } from "react-icons/gi";
 import { IoMdArrowRoundBack } from "react-icons/io";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../../Hooks/useAuth";
+import axios from "axios";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const Register = () => {
   const {
@@ -11,12 +13,44 @@ const Register = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { createUser, loginSocialUser } = useAuth();
+  const axiosSecure = useAxiosSecure();
+  const location = useLocation();
+  const naviagte = useNavigate();
+  const { createUser, loginSocialUser, updateUserProfile } = useAuth();
   const handleSignUp = (data) => {
     console.log(data);
+    const profilePhoto = data.photo[0];
     createUser(data.email, data.password)
       .then((result) => {
         console.log(result.user);
+        const formData = new FormData();
+        formData.append("image", profilePhoto);
+        const imageLink = `https://api.imgbb.com/1/upload?expiration=600&key=${
+          import.meta.env.VITE_photo_host
+        }`;
+        axios.post(imageLink, formData).then((res) => {
+          console.log(res.data.data.url);
+          // post the data to back-end
+          const userInfo = {
+            email: data.email,
+            displayName: data.name,
+            photoUrl: res.data.data.url,
+          };
+          axiosSecure.post("/users", userInfo).then((res) => {
+            if (res.data.insertedId) {
+              console.log("Post to back-end");
+            }
+          });
+          // update user profile
+          const userProfile = {
+            displayName: data.name,
+            photoUrl: res.data.data.url,
+          };
+          updateUserProfile(userProfile)
+            .then(() => console.log("User profile is updated"))
+            .catch((error) => console.log(error));
+        });
+        naviagte(location?.state || "/");
       })
       .catch((error) => {
         console.log(error);
@@ -26,6 +60,18 @@ const Register = () => {
     loginSocialUser()
       .then((result) => {
         console.log(result.user);
+        // post the data to back-end
+        const userInfo = {
+          email: result.user.email,
+          displayName: result.user.displayName,
+          photoUrl: result.user.photoURL,
+        };
+        axiosSecure.post("/users", userInfo).then((res) => {
+          if (res.data.insertedId) {
+            console.log("Post to back-end");
+          }
+        });
+        naviagte(location?.state || "/");
       })
       .catch((error) => {
         console.log(error);
@@ -81,15 +127,15 @@ const Register = () => {
               <p className="text-red-300">Name is required.</p>
             )}
 
-            <label className="label">Photo URL</label>
+            <label className="label">Photo</label>
             <input
-              type="text"
-              {...register("photoURL", { required: true })}
-              className="input"
-              placeholder="Photo URL"
+              type="file"
+              {...register("photo", { required: true })}
+              className="file-input"
+              placeholder="Photo"
             />
-            {errors.photoURL?.type === "required" && (
-              <p className="text-red-300">Photo URL is required.</p>
+            {errors.photo?.type === "required" && (
+              <p className="text-red-300">Photo is required.</p>
             )}
 
             <label className="label">Email</label>
@@ -124,7 +170,8 @@ const Register = () => {
             )}
 
             <button className="btn btn-neutral mt-4">SignUp</button>
-            <button onClick={handleGoogleLogin}
+            <button
+              onClick={handleGoogleLogin}
               type="button"
               className="btn mt-3 bg-white text-black border-[#e5e5e5]"
             >
@@ -160,6 +207,7 @@ const Register = () => {
             <p className="text-center">
               Already have an account?{" "}
               <Link
+                state={location.state}
                 to="/user-access/login"
                 className="text-red-300 font-bold underline"
               >

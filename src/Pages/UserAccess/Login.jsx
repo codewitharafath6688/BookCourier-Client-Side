@@ -2,8 +2,9 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { GiBookshelf } from "react-icons/gi";
 import { IoMdArrowRoundBack } from "react-icons/io";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../../Hooks/useAuth";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const Login = () => {
   const {
@@ -11,21 +12,37 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const axiosSecure = useAxiosSecure();
+  const location = useLocation();
+  const naviagte = useNavigate();
   const { loginUser, loginSocialUser } = useAuth();
   const handleLogin = (data) => {
     console.log(data);
     loginUser(data.email, data.password)
       .then((result) => {
         console.log(result.user);
+        naviagte(location?.state || "/");
       })
       .catch((error) => {
         console.log(error);
       });
   };
-   const handleGoogleLogin = () => {
+  const handleGoogleLogin = () => {
     loginSocialUser()
       .then((result) => {
         console.log(result.user);
+        // post the data to back-end
+        const userInfo = {
+          email: result.user.email,
+          displayName: result.user.displayName,
+          photoUrl: result.user.photoURL,
+        };
+        axiosSecure.post("/users", userInfo).then((res) => {
+          if (res.data.insertedId) {
+            console.log("Post to back-end");
+          }
+        });
+        naviagte(location?.state || "/");
       })
       .catch((error) => {
         console.log(error);
@@ -93,7 +110,11 @@ const Login = () => {
             )}
 
             <button className="btn btn-neutral mt-4">Login</button>
-            <button onClick={handleGoogleLogin} type="button" className="btn mt-3 bg-white text-black border-[#e5e5e5]">
+            <button
+              onClick={handleGoogleLogin}
+              type="button"
+              className="btn mt-3 bg-white text-black border-[#e5e5e5]"
+            >
               <svg
                 aria-label="Google logo"
                 width="16"
@@ -126,6 +147,7 @@ const Login = () => {
             <p className="text-center">
               Don’t have an account?{" "}
               <Link
+                state={location.state}
                 to="/user-access/register"
                 className="text-red-300 font-bold underline"
               >

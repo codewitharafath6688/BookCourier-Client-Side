@@ -12,6 +12,9 @@ import DashboardHome from "../Pages/Dashboard/DashboardHome";
 import UserAccess from "../Pages/UserAccess/UserAccess";
 import Login from "../Pages/UserAccess/Login";
 import Register from "../Pages/UserAccess/Register";
+import PrivateRoute from "./PrivateRoute";
+import Librarian from "../Pages/Librarian";
+import LibrarianApproval from "../Pages/Dashboard/LibrarianApproval";
 
 export const router = createBrowserRouter([
     {
@@ -31,6 +34,11 @@ export const router = createBrowserRouter([
                 Component: Coverage,
                 loader: () => fetch('/serviceCenter.json').then(res => res.json())
             },
+            {
+                path:'librarian',
+                element: <PrivateRoute><Librarian></Librarian></PrivateRoute>,
+                loader: () => fetch('/serviceCenter.json').then(res => res.json())
+            }
         ]
     },
     {
@@ -49,7 +57,7 @@ export const router = createBrowserRouter([
     },
     {
         path:'dashboard',
-        element: <DashboardRoute></DashboardRoute>,
+        element: <PrivateRoute><DashboardRoute></DashboardRoute></PrivateRoute>,
         children: [
             {
                 index:true,
@@ -66,6 +74,10 @@ export const router = createBrowserRouter([
             {
                 path:'edit-profile',
                 element: <EditProfile></EditProfile>
+            },
+            {
+                path:'librarians-approval',
+                element: <LibrarianApproval></LibrarianApproval>
             }
         ]
     }

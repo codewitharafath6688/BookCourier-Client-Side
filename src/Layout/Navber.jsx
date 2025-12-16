@@ -1,8 +1,10 @@
 import React from "react";
 import { GiBookshelf } from "react-icons/gi";
 import { Link, NavLink } from "react-router";
+import useAuth from "../Hooks/useAuth";
 
 const Navber = () => {
+  const { user, logOutUser } = useAuth();
   const links = (
     <>
       <li>
@@ -15,10 +17,26 @@ const Navber = () => {
         <NavLink to="/coverage">Coverage</NavLink>
       </li>
       <li>
-        <NavLink to="/dashboard">Dashboard</NavLink>
+        <NavLink to="/librarian">Be a Librarian</NavLink>
       </li>
+      {user && (
+        <>
+          <li>
+            <NavLink to="/dashboard">Dashboard</NavLink>
+          </li>
+        </>
+      )}
     </>
   );
+  const handleLogOut = () => {
+    logOutUser()
+      .then((result) => {
+        console.log(result.user);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
   return (
     <div>
       <div className="navbar bg-base-100 shadow-sm">
@@ -57,10 +75,22 @@ const Navber = () => {
           <ul className="menu menu-horizontal px-1">{links}</ul>
         </div>
         <div className="navbar-end">
-          <Link to="/user-access/login" className="btn mr-2">
-            Login
-          </Link>
-          <Link to="/user-access/register" className="btn">SignUp</Link>
+          {user ? (
+            <Link onClick={handleLogOut} className="btn mr-2">
+              SignOut
+            </Link>
+          ) : (
+            <Link to="/user-access/login" className="btn mr-2">
+              Login
+            </Link>
+          )}
+          {user ? (
+            ""
+          ) : (
+            <Link to="/user-access/register" className="btn">
+              SignUp
+            </Link>
+          )}
         </div>
       </div>
     </div>
