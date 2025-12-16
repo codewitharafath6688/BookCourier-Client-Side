@@ -16,6 +16,10 @@ import PrivateRoute from "./PrivateRoute";
 import Librarian from "../Pages/Librarian";
 import LibrarianApproval from "../Pages/Dashboard/LibrarianApproval";
 import Management from "../Pages/Dashboard/Management";
+import Forbidden from "../Pages/Forbidden";
+import AdminRoute from "./AdminRoute";
+import AddBook from "../Pages/Dashboard/AddBook";
+import LibrarianRoute from "./LibrarianRoute";
 
 export const router = createBrowserRouter([
     {
@@ -78,12 +82,20 @@ export const router = createBrowserRouter([
             },
             {
                 path:'librarians-approval',
-                element: <LibrarianApproval></LibrarianApproval>
+                element: <AdminRoute><LibrarianApproval></LibrarianApproval></AdminRoute>
             },
             {
                 path:'management',
-                element: <Management></Management>
+                element: <AdminRoute><Management></Management></AdminRoute>
+            },
+            {
+                path:'add-book',
+                element: <LibrarianRoute><AddBook></AddBook></LibrarianRoute>
             }
         ]
+    },
+    {
+        path:'forbidden',
+        Component: Forbidden
     }
 ])

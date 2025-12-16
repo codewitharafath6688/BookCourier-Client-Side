@@ -2,12 +2,14 @@ import React from "react";
 import { FaUserEdit } from "react-icons/fa";
 import { GiBookshelf } from "react-icons/gi";
 import { LiaFileInvoiceSolid } from "react-icons/lia";
-import { MdOutlineLocalLibrary, MdSpaceDashboard } from "react-icons/md";
+import { MdBookmarkAdd, MdOutlineLocalLibrary, MdSpaceDashboard } from "react-icons/md";
 import { PiUsersThreeFill } from "react-icons/pi";
 import { TfiShoppingCartFull } from "react-icons/tfi";
 import { Link, Outlet } from "react-router";
+import useRole from "../../Hooks/useRole";
 
 const DashboardRoute = () => {
+  const { role } = useRole();
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -59,11 +61,11 @@ const DashboardRoute = () => {
               <Link
                 to="/dashboard"
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="User Dashboard"
+                data-tip="Dashboard"
               >
                 {/* Settings icon */}
-                <MdSpaceDashboard/>
-                <span className="is-drawer-close:hidden">User Dashboard</span>
+                <MdSpaceDashboard />
+                <span className="is-drawer-close:hidden">Dashboard</span>
               </Link>
             </li>
             {/* List item */}
@@ -89,28 +91,51 @@ const DashboardRoute = () => {
                 <span className="is-drawer-close:hidden">Invoices</span>
               </Link>
             </li>
-            <li>
-              <Link
-                to="/dashboard/librarians-approval"
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Librarian's Approval"
-              >
-                {/* Settings icon */}
-                <MdOutlineLocalLibrary />
-                <span className="is-drawer-close:hidden">Librarian's Approval</span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/dashboard/management"
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Users Active Role"
-              >
-                {/* Settings icon */}
-                <PiUsersThreeFill />
-                <span className="is-drawer-close:hidden">Users Active Role</span>
-              </Link>
-            </li>
+            {/* Admin Section */}
+            {role === "admin" && (
+              <>
+                <li>
+                  <Link
+                    to="/dashboard/librarians-approval"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="Librarian's Approval"
+                  >
+                    {/* Settings icon */}
+                    <MdOutlineLocalLibrary />
+                    <span className="is-drawer-close:hidden">
+                      Librarian's Approval
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/dashboard/management"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="Users Active Role"
+                  >
+                    {/* Settings icon */}
+                    <PiUsersThreeFill />
+                    <span className="is-drawer-close:hidden">
+                      Users Active Role
+                    </span>
+                  </Link>
+                </li>
+              </>
+            )}
+            {role == "librarian" && (
+              <>
+                <li>
+                  <Link
+                    to="/dashboard/add-book"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="Add Book"
+                  >
+                    <MdBookmarkAdd />
+                    <span className="is-drawer-close:hidden">Add Book</span>
+                  </Link>
+                </li>
+              </>
+            )}
             <li>
               <Link
                 to="/dashboard/edit-profile"
