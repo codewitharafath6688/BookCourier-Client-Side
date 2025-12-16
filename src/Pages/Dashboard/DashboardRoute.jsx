@@ -1,5 +1,5 @@
 import React from "react";
-import { FaUserEdit } from "react-icons/fa";
+import { FaAddressBook, FaUserEdit } from "react-icons/fa";
 import { GiBookshelf } from "react-icons/gi";
 import { LiaFileInvoiceSolid } from "react-icons/lia";
 import { MdBookmarkAdd, MdOutlineLocalLibrary, MdSpaceDashboard } from "react-icons/md";
@@ -132,6 +132,26 @@ const DashboardRoute = () => {
                   >
                     <MdBookmarkAdd />
                     <span className="is-drawer-close:hidden">Add Book</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/dashboard/my-books"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="My Books"
+                  >
+                    <FaAddressBook />
+                    <span className="is-drawer-close:hidden">My Books</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/dashboard/my-books"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="Orders"
+                  >
+                    <FaAddressBook />
+                    <span className="is-drawer-close:hidden">Oders</span>
                   </Link>
                 </li>
               </>

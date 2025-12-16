@@ -20,6 +20,7 @@ import Forbidden from "../Pages/Forbidden";
 import AdminRoute from "./AdminRoute";
 import AddBook from "../Pages/Dashboard/AddBook";
 import LibrarianRoute from "./LibrarianRoute";
+import MyBooks from "../Pages/Dashboard/MyBooks";
 
 export const router = createBrowserRouter([
     {
@@ -91,6 +92,10 @@ export const router = createBrowserRouter([
             {
                 path:'add-book',
                 element: <LibrarianRoute><AddBook></AddBook></LibrarianRoute>
+            },
+            {
+                path:'my-books',
+                element: <LibrarianRoute><MyBooks></MyBooks></LibrarianRoute>
             }
         ]
     },
