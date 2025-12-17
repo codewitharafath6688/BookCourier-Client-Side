@@ -2,7 +2,7 @@ import React from "react";
 import { FaAddressBook, FaUserEdit } from "react-icons/fa";
 import { GiBookshelf } from "react-icons/gi";
 import { LiaFileInvoiceSolid } from "react-icons/lia";
-import { MdBookmarkAdd, MdOutlineLocalLibrary, MdSpaceDashboard } from "react-icons/md";
+import { MdBookmarkAdd, MdOutlineLocalLibrary, MdOutlineMenuBook, MdSpaceDashboard } from "react-icons/md";
 import { PiUsersThreeFill } from "react-icons/pi";
 import { TfiShoppingCartFull } from "react-icons/tfi";
 import { Link, Outlet } from "react-router";
@@ -118,6 +118,19 @@ const DashboardRoute = () => {
                     <PiUsersThreeFill />
                     <span className="is-drawer-close:hidden">
                       Users Active Role
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/dashboard/manage-books"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="Manage Books"
+                  >
+                    {/* Settings icon */}
+                    <MdOutlineMenuBook />
+                    <span className="is-drawer-close:hidden">
+                      Manage Books
                     </span>
                   </Link>
                 </li>
