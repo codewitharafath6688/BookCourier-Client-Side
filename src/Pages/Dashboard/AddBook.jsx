@@ -1,13 +1,26 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import useAuth from "../../Hooks/useAuth";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const AddBook = () => {
   const { user } = useAuth();
-  const { register, handleSubmit } = useForm();
+  const axiosSecure = useAxiosSecure();
+  const { register, handleSubmit, reset } = useForm();
   const handleAddBook = (data) => {
     console.log(data);
-  }
+    axiosSecure.post("/add-book", data).then((res) => {
+      if (res.data.insertedId) {
+        Swal.fire({
+          title: "Successfully Added",
+          icon: "success",
+          draggable: true,
+        });
+        reset();
+      }
+    });
+  };
   return (
     <div className="w-100 mt-1 mx-auto">
       <h2 className="text-2xl font-bold mb-1">Add your book</h2>
@@ -63,11 +76,11 @@ const AddBook = () => {
 
           <label className="select mt-2">
             <span className="label">Status</span>
-            <select {...register("bookStatus")}
-            defaultValue=""
-            >
-              <option value="" disabled>Select your status</option>
-              <option value="published">published</option>
+            <select {...register("bookStatus")} defaultValue="" required>
+              <option value="" disabled>
+                Select your status
+              </option>
+              <option value="pending">pending approval</option>
               <option value="unpublished">unpublished</option>
             </select>
           </label>
