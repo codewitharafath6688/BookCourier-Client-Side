@@ -38,6 +38,8 @@ const MyOrders = () => {
                 <td>
                   {order.paymentStatus === 'paid' ? <p className="text-green-400">paid</p> : <Link className="btn" to={`/dashboard/payment/${order._id}`}>Pay</Link>}
                 </td>
+                <td></td>
+                <td></td>
               </tr>
             ))}
           </tbody>
