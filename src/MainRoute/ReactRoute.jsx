@@ -23,94 +23,140 @@ import LibrarianRoute from "./LibrarianRoute";
 import MyBooks from "../Pages/Dashboard/MyBooks";
 import Orders from "../Pages/Dashboard/Orders";
 import ManageBooks from "../Pages/Dashboard/ManageBooks";
+import ViewDetails from "../Pages/ViewDetails";
+import Payment from "../Pages/Payment/Payment";
 
 export const router = createBrowserRouter([
-    {
-        path:'/',
-        Component:Root,
-        children: [
-            {
-                index: true,
-                Component: Home
-            },
-            {
-                path:'all-books',
-                Component: AllBooks
-            },
-            {
-                path:'coverage',
-                Component: Coverage,
-                loader: () => fetch('/serviceCenter.json').then(res => res.json())
-            },
-            {
-                path:'librarian',
-                element: <PrivateRoute><Librarian></Librarian></PrivateRoute>,
-                loader: () => fetch('/serviceCenter.json').then(res => res.json())
-            }
-        ]
-    },
-    {
-        path:'user-access',
-        element: <UserAccess></UserAccess>,
-        children: [
-            {
-                path:'login',
-                element: <Login></Login>
-            },
-            {
-                path:'register',
-                element: <Register></Register>
-            }
-        ]
-    },
-    {
-        path:'dashboard',
-        element: <PrivateRoute><DashboardRoute></DashboardRoute></PrivateRoute>,
-        children: [
-            {
-                index:true,
-                element: <DashboardHome></DashboardHome>
-            },
-            {
-                path:'my-orders',
-                element: <MyOrders></MyOrders>
-            },
-            {
-                path:'invoices',
-                element: <Invoices></Invoices>
-            },
-            {
-                path:'edit-profile',
-                element: <EditProfile></EditProfile>
-            },
-            {
-                path:'librarians-approval',
-                element: <AdminRoute><LibrarianApproval></LibrarianApproval></AdminRoute>
-            },
-            {
-                path:'management',
-                element: <AdminRoute><Management></Management></AdminRoute>
-            },
-            {
-                path:'add-book',
-                element: <LibrarianRoute><AddBook></AddBook></LibrarianRoute>
-            },
-            {
-                path:'my-books',
-                element: <LibrarianRoute><MyBooks></MyBooks></LibrarianRoute>
-            },
-            {
-                path:'librarian-orders',
-                element: <LibrarianRoute><Orders></Orders></LibrarianRoute>
-            },
-            {
-                path:'manage-books',
-                element: <AdminRoute><ManageBooks></ManageBooks></AdminRoute>
-            }
-        ]
-    },
-    {
-        path:'forbidden',
-        Component: Forbidden
-    }
-])
+  {
+    path: "/",
+    Component: Root,
+    children: [
+      {
+        index: true,
+        Component: Home,
+      },
+      {
+        path: "all-books",
+        Component: AllBooks,
+      },
+      {
+        path: "coverage",
+        Component: Coverage,
+        loader: () => fetch("/serviceCenter.json").then((res) => res.json()),
+      },
+      {
+        path: "librarian",
+        element: (
+          <PrivateRoute>
+            <Librarian></Librarian>
+          </PrivateRoute>
+        ),
+        loader: () => fetch("/serviceCenter.json").then((res) => res.json()),
+      },
+      {
+        path: "view-details/:id",
+        element: (
+          <PrivateRoute>
+            <ViewDetails></ViewDetails>
+          </PrivateRoute>
+        ),
+      },
+    ],
+  },
+  {
+    path: "user-access",
+    element: <UserAccess></UserAccess>,
+    children: [
+      {
+        path: "login",
+        element: <Login></Login>,
+      },
+      {
+        path: "register",
+        element: <Register></Register>,
+      },
+    ],
+  },
+  {
+    path: "dashboard",
+    element: (
+      <PrivateRoute>
+        <DashboardRoute></DashboardRoute>
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <DashboardHome></DashboardHome>,
+      },
+      {
+        path: "my-orders",
+        element: <MyOrders></MyOrders>,
+      },
+      {
+        path: "invoices",
+        element: <Invoices></Invoices>,
+      },
+      {
+        path: "edit-profile",
+        element: <EditProfile></EditProfile>,
+      },
+      {
+        path: "librarians-approval",
+        element: (
+          <AdminRoute>
+            <LibrarianApproval></LibrarianApproval>
+          </AdminRoute>
+        ),
+      },
+      {
+        path:'payment/:bookId',
+        element: <Payment></Payment>
+      },
+      {
+        path: "management",
+        element: (
+          <AdminRoute>
+            <Management></Management>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "add-book",
+        element: (
+          <LibrarianRoute>
+            <AddBook></AddBook>
+          </LibrarianRoute>
+        ),
+      },
+      {
+        path: "my-books",
+        element: (
+          <LibrarianRoute>
+            <MyBooks></MyBooks>
+          </LibrarianRoute>
+        ),
+      },
+      {
+        path: "librarian-orders",
+        element: (
+          <LibrarianRoute>
+            <Orders></Orders>
+          </LibrarianRoute>
+        ),
+      },
+      {
+        path: "manage-books",
+        element: (
+          <AdminRoute>
+            <ManageBooks></ManageBooks>
+          </AdminRoute>
+        ),
+      },
+    ],
+  },
+  {
+    path: "forbidden",
+    Component: Forbidden,
+  },
+]);

@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
+import { Link } from "react-router";
 
 const AllBooks = () => {
   const axiosSecure = useAxiosSecure();
@@ -35,7 +36,7 @@ const AllBooks = () => {
               <h2 className="card-title text-base">{book.bookName}</h2>
               <p className="font-semibold text-primary">Price: ${book.price}</p>
               <div className="card-actions justify-end">
-                <button className="btn btn-primary btn-sm">View</button>
+                <Link to={`/view-details/${book._id}`} className="btn btn-primary btn-sm">View</Link>
               </div>
             </div>
           </div>
