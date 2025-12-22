@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
-import { MdAdminPanelSettings } from "react-icons/md";
+import { MdAdminPanelSettings, MdOutlineDeleteOutline } from "react-icons/md";
 import { BsFillShieldSlashFill } from "react-icons/bs";
 import Swal from "sweetalert2";
 
@@ -69,65 +69,107 @@ const Management = () => {
       refetch();
     });
   };
+  const handleDeleteUser = (userId) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Delete user",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Do it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure.delete(`/admin/user-delete/${userId}`).then((res) => {
+          if (res.data.deletedCount) {
+            Swal.fire({
+              title: "Done!",
+              text: `Successfully deleted a user`,
+              icon: "success",
+            });
+          }
+          refetch();
+        });
+      }
+    });
+  };
   return (
-    <div>
-      <h2>Users : {users.length}</h2>
-      <div className="overflow-x-auto">
-        <table className="table">
-          {/* head */}
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>User Role</th>
-              <th>Admin Action</th>
-              <th>Others Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user, i) => (
-              <tr key={user._id}>
-                <td>{i + 1}</td>
-                <td>
-                  <div className="flex items-center gap-3">
-                    <div className="avatar">
-                      <div className="mask mask-squircle h-12 w-12">
-                        <img
-                          src={user.photoURL}
-                          alt="Avatar Tailwind CSS Component"
-                        />
+    <div className="p-3 sm:p-4 md:p-6">
+      <h2 className="text-lg md:text-2xl font-semibold mb-4">
+        Users
+        <span className="badge badge-primary ml-2">{users.length}</span>
+      </h2>
+
+      <div className="card bg-base-100 shadow-md">
+        <div className="overflow-x-auto">
+          <table className="table table-zebra table-sm md:table-md min-w-[900px]">
+            {/* head */}
+            <thead className="bg-base-200">
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>User Role</th>
+                <th className="text-center">Admin Action</th>
+                <th className="text-center">Other Actions</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {users.map((user, i) => (
+                <tr key={user._id}>
+                  <th>{i + 1}</th>
+
+                  <td className="font-medium whitespace-nowrap">
+                    <div className="flex items-center gap-3">
+                      <div className="avatar">
+                        <div className="mask mask-squircle h-12 w-12">
+                          <img src={user.photoUrl} alt="Avatar" />
+                        </div>
                       </div>
-                    </div>
-                    <div>
                       <div className="font-bold">{user.displayName}</div>
                     </div>
-                  </div>
-                </td>
-                <td>{user.email}</td>
-                <td>{user.role}</td>
-                <th>
-                  {user.role === "admin" ? (
+                  </td>
+
+                  <td className="break-all max-w-[260px]">{user.email}</td>
+                  <td className="whitespace-nowrap">{user.role}</td>
+
+                  <td className="text-center whitespace-nowrap">
+                    {user.role === "admin" ? (
+                      <button
+                        onClick={() => handleRemoveAdmin(user)}
+                        className="btn btn-xs btn-outline btn-warning"
+                      >
+                        <BsFillShieldSlashFill size={16} />
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => handleAddAdmin(user)}
+                        className="btn btn-xs btn-outline btn-success"
+                      >
+                        <MdAdminPanelSettings size={16} />
+                      </button>
+                    )}
+                  </td>
+
+                  <td className="text-center whitespace-nowrap space-x-1">
                     <button
-                      onClick={() => handleRemoveAdmin(user)}
-                      className="btn text-xl"
+                      onClick={() => handleDeleteUser(user._id)}
+                      className="btn btn-xs btn-outline btn-error"
                     >
-                      <BsFillShieldSlashFill />
+                      <MdOutlineDeleteOutline size={16} />
                     </button>
-                  ) : (
-                    <button
-                      onClick={() => handleAddAdmin(user)}
-                      className="btn text-xl"
-                    >
-                      <MdAdminPanelSettings />
-                    </button>
-                  )}
-                </th>
-                <th>Actions</th>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          {/* Mobile hint */}
+          <div className="text-center text-xs text-gray-400 py-2 md:hidden">
+            ← Swipe horizontally to view more →
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -33,10 +33,10 @@ const MyBooks = () => {
     librarianModalRef.current.showModal();
   };
   const closeModal = () => {
-  if (librarianModalRef.current) {
-    librarianModalRef.current.close();
-  }
-};
+    if (librarianModalRef.current) {
+      librarianModalRef.current.close();
+    }
+  };
   const handleUpdateBook = (data) => {
     axiosSecure.patch(`/add-book/${selectedBook._id}`, data).then((res) => {
       if (res.data.modifiedCount) {
@@ -51,36 +51,53 @@ const MyBooks = () => {
     });
   };
   return (
-    <div>
-      <h2>Books: {addBooks.length}</h2>
+    <div className="w-full p-3 sm:p-4">
+      <h2 className="text-lg sm:text-xl font-semibold mb-3">
+        Books
+        <span className="badge badge-primary ml-2">{addBooks.length}</span>
+      </h2>
+
       <div className="overflow-x-auto">
-        <table className="table table-zebra">
-          {/* head */}
-          <thead>
+        <table className="table table-zebra table-sm sm:table-md min-w-[700px]">
+          <thead className="bg-base-200">
             <tr>
               <th>#</th>
               <th>Book Name</th>
               <th>Author</th>
               <th>Book Image</th>
-              <th>Book Status</th>
-              <th>Action</th>
+              <th>Status</th>
+              <th className="text-center">Action</th>
             </tr>
           </thead>
+
           <tbody>
             {addBooks.map((book, i) => (
               <tr key={book._id}>
                 <th>{i + 1}</th>
-                <td>{book.bookName}</td>
-                <td>{book.authorName}</td>
+
+                <td className="whitespace-nowrap font-medium">
+                  {book.bookName}
+                </td>
+
+                <td className="whitespace-nowrap">{book.authorName}</td>
+
                 <td>
                   <img
-                    className="w-15 h-12 object-cover rounded"
                     src={book.bookImageUrl}
+                    alt="book"
+                    className="w-10 h-12 sm:w-12 sm:h-14 object-cover rounded"
                   />
                 </td>
-                <td>{book.bookStatus}</td>
-                <td>
-                  <button onClick={() => handleModal(book)} className="btn">
+
+                <td className="whitespace-nowrap">
+                  <span className="font-medium">{book.bookStatus}</span>
+                </td>
+
+                <td className="text-center">
+                  <button
+                    onClick={() => handleModal(book)}
+                    className="btn btn-xs sm:btn-sm btn-outline"
+                  >
                     Edit
                   </button>
                 </td>
@@ -89,91 +106,99 @@ const MyBooks = () => {
           </tbody>
         </table>
       </div>
-      {/* Open the modal using document.getElementById('ID').showModal() method */}
+
       <dialog
         ref={librarianModalRef}
         className="modal modal-bottom sm:modal-middle"
       >
-        <div className="modal-box">
-          {/* <h3 className="font-bold text-lg">Hello!</h3> */}
-          <p className="py-4 text-xl">Edit your book</p>
-          <div className="modal-action">
-            <form onSubmit={handleSubmit(handleUpdateBook)} className="mx-auto">
-              <fieldset className="fieldset w-100 bg-base-200 border-none rounded-box  border p-4">
-                <legend className="fieldset-legend">
-                  Add details about book
-                </legend>
+        <div className="modal-box max-h-[90vh] overflow-y-auto">
+          <h3 className="text-lg font-semibold mb-2">Edit your book</h3>
 
-                <label className="label">Book Name</label>
-                <input
-                  type="text"
-                  {...register("bookName")}
-                  className="input w-full"
-                  placeholder="Book Name"
-                  required
-                />
+          <form onSubmit={handleSubmit(handleUpdateBook)} className="space-y-2">
+            <div>
+              <label className="label text-sm">Book Name</label>
+              <input
+                type="text"
+                {...register("bookName")}
+                className="input input-bordered input-sm w-full"
+                required
+              />
+            </div>
 
-                <label className="label">Book Image URL</label>
-                <input
-                  type="text"
-                  {...register("bookImageUrl")}
-                  className="input w-full"
-                  placeholder="Book Image URL"
-                  required
-                />
+            <div>
+              <label className="label text-sm">Book Image URL</label>
+              <input
+                type="text"
+                {...register("bookImageUrl")}
+                className="input input-bordered input-sm w-full"
+                required
+              />
+            </div>
 
-                <label className="label">Author Name</label>
-                <input
-                  type="text"
-                  {...register("authorName")}
-                  className="input w-full"
-                  placeholder="Author Name"
-                  required
-                />
+            <div>
+              <label className="label text-sm">Author Name</label>
+              <input
+                type="text"
+                {...register("authorName")}
+                className="input input-bordered input-sm w-full"
+                required
+              />
+            </div>
 
-                <label className="label">Price</label>
-                <input
-                  type="text"
-                  {...register("price")}
-                  className="input w-full"
-                  placeholder="Price"
-                  required
-                />
+            <div>
+              <label className="label text-sm">Price</label>
+              <input
+                type="text"
+                {...register("price")}
+                className="input input-bordered input-sm w-full"
+                required
+              />
+            </div>
 
-                <label className="label">Librarian Email</label>
-                <input
-                  type="text"
-                  {...register("librarianEmail")}
-                  className="input w-full"
-                  placeholder="Librarian Email"
-                  readOnly
-                />
+            <div>
+              <label className="label text-sm">Librarian Email</label>
+              <input
+                type="text"
+                {...register("librarianEmail")}
+                className="input input-bordered input-sm w-full"
+                readOnly
+              />
+            </div>
 
-                <label className="select mt-2">
-                  <span className="label">Status</span>
-                  <select {...register("bookStatus")} required>
-                    <option>
-                      Select your status
-                    </option>
-                    <option value="pending">pending approval</option>
-                    <option value="unpublished">unpublished</option>
-                  </select>
-                </label>
-                <button type="submit" className="btn border-2 rounded-2xl mt-2 border-white">
-                  Submit
-                </button>
-              </fieldset>
+            <div>
+              <label className="label text-sm">Status</label>
+              <select
+                {...register("bookStatus")}
+                className="select select-bordered select-sm w-full"
+                required
+              >
+                <option value="" disabled>
+                  Select your status
+                </option>
+                <option value="pending">pending approval</option>
+                <option value="unpublished">unpublished</option>
+              </select>
+            </div>
+
+            <div className="flex justify-end gap-2 pt-2">
               <button
                 type="button"
-                onClick={() => closeModal()}
-                className="btn mt-3"
+                onClick={closeModal}
+                className="btn btn-sm btn-ghost"
               >
                 Close
               </button>
-            </form>
-          </div>
+              <button type="submit" className="btn btn-sm btn-primary">
+                Save
+              </button>
+            </div>
+          </form>
         </div>
       </dialog>
+      
+<div className="text-center text-xs text-gray-400 py-2 md:hidden">
+  ← Swipe horizontally to view more →
+</div>
     </div>
   );
 };

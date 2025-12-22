@@ -45,130 +45,146 @@ const Librarian = () => {
       });
   };
   return (
-    <div className="w-250 mx-auto mt-2">
-      <h2 className="text-4xl mb-2 font-bold">Be A Librarian</h2>
-      <form onSubmit={handleSubmit(handleLibrarian)}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {/* librarian Details */}
+    <div className="max-w-5xl mx-auto mt-8 px-4">
+      <div className="card bg-base-100 shadow-xl">
+        <div className="card-body">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-6">
+            Be A Librarian
+          </h2>
 
-          <fieldset className="fieldset">
-            <h4 className="text-2xl font-semibold">Librarian Details</h4>
-            {/* librarian name */}
-            <label className="label">librarian Name</label>
-            <input
-              type="text"
-              {...register("name")}
-              defaultValue={user?.displayName}
-              className="input w-full"
-              placeholder="librarian Name"
-              readOnly
-            />
+          <form onSubmit={handleSubmit(handleLibrarian)}>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Section: Librarian Info */}
+              <div className="lg:col-span-2">
+                <h4 className="text-xl font-semibold border-b pb-2 mb-4">
+                  Librarian Information
+                </h4>
+              </div>
 
-            {/* librarian email */}
-            <label className="label">Email</label>
-            <input
-              type="text"
-              {...register("email")}
-              defaultValue={user?.email}
-              className="input w-full"
-              placeholder="librarian Email"
-              readOnly
-            />
+              <div>
+                <label className="label">Name</label>
+                <input
+                  type="text"
+                  {...register("name")}
+                  defaultValue={user?.displayName}
+                  className="input input-bordered w-full"
+                  readOnly
+                />
+              </div>
 
-            {/* librarian region */}
-            <fieldset className="fieldset">
-              <legend className="fieldset-legend">Regions</legend>
-              <select
-                {...register("region")}
-                defaultValue="Pick a region"
-                className="select"
-                required
-              >
-                <option disabled={true}>Pick a region</option>
-                {regions.map((r, i) => (
-                  <option key={i} value={r}>
-                    {r}
-                  </option>
-                ))}
-              </select>
-            </fieldset>
+              <div>
+                <label className="label">Email</label>
+                <input
+                  type="text"
+                  {...register("email")}
+                  defaultValue={user?.email}
+                  className="input input-bordered w-full"
+                  readOnly
+                />
+              </div>
 
-            {/* librarian districts */}
-            <fieldset className="fieldset">
-              <legend className="fieldset-legend">Districts</legend>
-              <select
-                {...register("district")}
-                defaultValue="Pick a district"
-                className="select"
-                required
-              >
-                <option disabled={true}>Pick a district</option>
-                {districtsByRegion(librarianRegion).map((r, i) => (
-                  <option key={i} value={r}>
-                    {r}
-                  </option>
-                ))}
-              </select>
-            </fieldset>
+              <div>
+                <label className="label">Region</label>
+                <select
+                  {...register("region")}
+                  defaultValue="Pick a region"
+                  className="select select-bordered w-full"
+                  required
+                >
+                  <option disabled>Pick a region</option>
+                  {regions.map((r, i) => (
+                    <option key={i} value={r}>
+                      {r}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-            {/* librarian address */}
-            <label className="label mt-4">Your Address</label>
-            <input
-              type="text"
-              {...register("address")}
-              className="input w-full"
-              placeholder="librarian Address"
-              required
-            />
-          </fieldset>
-          {/* librarian more Details */}
-          <fieldset className="fieldset">
-            <h4 className="text-2xl font-semibold">More Details</h4>
-            {/* librarian education level */}
-            <label className="label">Highest Education Level</label>
-            <input
-              type="text"
-              {...register("level")}
-              className="input w-full"
-              placeholder="Highest Education Level"
-              required
-            />
-            {/* librarian degree/subject */}
-            <label className="label">Degree/Subject</label>
-            <input
-              type="text"
-              {...register("degree")}
-              className="input w-full"
-              placeholder="Degree/Subject"
-              required
-            />
-            {/* librarian passing year */}
-            <label className="label">Year of Graduation</label>
-            <input
-              type="number"
-              {...register("year")}
-              className="input w-full"
-              placeholder="Year of Graduation"
-              required
-            />
+              <div>
+                <label className="label">District</label>
+                <select
+                  {...register("district")}
+                  defaultValue="Pick a district"
+                  className="select select-bordered w-full"
+                  required
+                >
+                  <option disabled>Pick a district</option>
+                  {districtsByRegion(librarianRegion).map((r, i) => (
+                    <option key={i} value={r}>
+                      {r}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-            {/* librarian NID */}
-            <label className="label">NID</label>
-            <input
-              type="text"
-              {...register("nid")}
-              className="input w-full"
-              placeholder="NID"
-              required
-            />
-          </fieldset>
+              <div className="lg:col-span-2">
+                <label className="label">Address</label>
+                <input
+                  type="text"
+                  {...register("address")}
+                  className="input input-bordered w-full"
+                  placeholder="Your Address"
+                  required
+                />
+              </div>
+
+              {/* Section: Education */}
+              <div className="lg:col-span-2 mt-4">
+                <h4 className="text-xl font-semibold border-b pb-2 mb-4">
+                  Education Details
+                </h4>
+              </div>
+
+              <div>
+                <label className="label">Highest Education Level</label>
+                <input
+                  type="text"
+                  {...register("level")}
+                  className="input input-bordered w-full"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="label">Degree / Subject</label>
+                <input
+                  type="text"
+                  {...register("degree")}
+                  className="input input-bordered w-full"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="label">Year of Graduation</label>
+                <input
+                  type="number"
+                  {...register("year")}
+                  className="input input-bordered w-full"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="label">NID</label>
+                <input
+                  type="text"
+                  {...register("nid")}
+                  className="input input-bordered w-full"
+                  required
+                />
+              </div>
+            </div>
+
+            {/* Submit */}
+            <div className="flex justify-center mt-8">
+              <button className="btn btn-primary px-12">
+                Apply as a Librarian
+              </button>
+            </div>
+          </form>
         </div>
-        <input
-          type="submit"
-          className="btn  mt-3"
-          value="Apply as a librarian"
-        />
-      </form>
+      </div>
     </div>
   );
 };

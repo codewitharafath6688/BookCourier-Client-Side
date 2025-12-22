@@ -5,7 +5,7 @@ import { Link } from "react-router";
 
 const AllBooks = () => {
   const axiosSecure = useAxiosSecure();
-  const { data: books = [], refetch } = useQuery({
+  const { data: books = [] } = useQuery({
     queryKey: ["books", "published"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/books`);

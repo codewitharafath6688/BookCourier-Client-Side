@@ -22,73 +22,100 @@ const AddBook = () => {
     });
   };
   return (
-    <div className="w-100 mt-1 mx-auto">
-      <h2 className="text-2xl font-bold mb-1">Add your book</h2>
-      <form onSubmit={handleSubmit(handleAddBook)} className="w-100">
-        <fieldset className="fieldset w-100 bg-base-200 border-none rounded-box  border p-4">
-          <legend className="fieldset-legend">Add details about book</legend>
+    <div className="w-full p-4 flex justify-center">
+      <div className="w-full max-w-xl">
+        <h2 className="text-lg font-semibold mb-3">Add Your Book</h2>
 
-          <label className="label">Book Name</label>
-          <input
-            type="text"
-            {...register("bookName")}
-            className="input w-full"
-            placeholder="Book Name"
-            required
-          />
+        <div className="card bg-base-100 shadow-md">
+          <form onSubmit={handleSubmit(handleAddBook)}>
+            <fieldset className="bg-base-200 rounded-box p-4">
+              <legend className="text-sm font-medium">
+                Add details about book
+              </legend>
 
-          <label className="label">Book Image URL</label>
-          <input
-            type="text"
-            {...register("bookImageUrl")}
-            className="input w-full"
-            placeholder="Book Image URL"
-            required
-          />
+              <div className="space-y-2">
+                <div>
+                  <label className="label text-sm">Book Name</label>
+                  <input
+                    type="text"
+                    {...register("bookName")}
+                    className="input input-bordered input-sm w-full"
+                    placeholder="Book Name"
+                    required
+                  />
+                </div>
 
-          <label className="label">Author Name</label>
-          <input
-            type="text"
-            {...register("authorName")}
-            className="input w-full"
-            placeholder="Author Name"
-            required
-          />
+                <div>
+                  <label className="label text-sm">Book Image URL</label>
+                  <input
+                    type="text"
+                    {...register("bookImageUrl")}
+                    className="input input-bordered input-sm w-full"
+                    placeholder="Book Image URL"
+                    required
+                  />
+                </div>
 
-          <label className="label">Price</label>
-          <input
-            type="text"
-            {...register("price")}
-            className="input w-full"
-            placeholder="Price"
-            required
-          />
+                <div>
+                  <label className="label text-sm">Author Name</label>
+                  <input
+                    type="text"
+                    {...register("authorName")}
+                    className="input input-bordered input-sm w-full"
+                    placeholder="Author Name"
+                    required
+                  />
+                </div>
 
-          <label className="label">Librarian Email</label>
-          <input
-            type="text"
-            {...register("librarianEmail")}
-            defaultValue={user?.email}
-            className="input w-full"
-            placeholder="Librarian Email"
-            readOnly
-          />
+                <div>
+                  <label className="label text-sm">Price</label>
+                  <input
+                    type="text"
+                    {...register("price")}
+                    className="input input-bordered input-sm w-full"
+                    placeholder="Price"
+                    required
+                  />
+                </div>
 
-          <label className="select mt-2">
-            <span className="label">Status</span>
-            <select {...register("bookStatus")} defaultValue="" required>
-              <option value="" disabled>
-                Select your status
-              </option>
-              <option value="pending">pending approval</option>
-              <option value="unpublished">unpublished</option>
-            </select>
-          </label>
-          <button className="btn border-2 rounded-2xl mt-2 border-white">
-            Submit
-          </button>
-        </fieldset>
-      </form>
+                <div>
+                  <label className="label text-sm">Librarian Email</label>
+                  <input
+                    type="text"
+                    {...register("librarianEmail")}
+                    defaultValue={user?.email}
+                    className="input input-bordered input-sm w-full"
+                    readOnly
+                  />
+                </div>
+
+                <div>
+                  <label className="label text-sm">Status</label>
+                  <select
+                    {...register("bookStatus")}
+                    defaultValue=""
+                    className="select select-bordered select-sm w-full"
+                    required
+                  >
+                    <option value="" disabled>
+                      Select your status
+                    </option>
+                    <option value="pending">pending approval</option>
+                    <option value="unpublished">unpublished</option>
+                  </select>
+                </div>
+
+                <button
+                  type="submit"
+                  className="btn btn-primary btn-sm w-full mt-2"
+                >
+                  Submit
+                </button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
     </div>
   );
 };

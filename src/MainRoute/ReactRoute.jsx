@@ -25,6 +25,8 @@ import Orders from "../Pages/Dashboard/Orders";
 import ManageBooks from "../Pages/Dashboard/ManageBooks";
 import ViewDetails from "../Pages/ViewDetails";
 import Payment from "../Pages/Payment/Payment";
+import PaymentSuccess from "../Pages/Payment/PaymentSuccess";
+import PaymentCancel from "../Pages/Payment/PaymentCancel";
 
 export const router = createBrowserRouter([
   {
@@ -100,6 +102,14 @@ export const router = createBrowserRouter([
       {
         path: "edit-profile",
         element: <EditProfile></EditProfile>,
+      },
+      {
+        path:'payment-success',
+        element: <PaymentSuccess></PaymentSuccess>
+      },
+      {
+        path:'payment-cancelled',
+        element: <PaymentCancel></PaymentCancel>
       },
       {
         path: "librarians-approval",

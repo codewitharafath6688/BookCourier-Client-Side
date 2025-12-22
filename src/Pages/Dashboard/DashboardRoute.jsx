@@ -69,8 +69,9 @@ const DashboardRoute = () => {
                 <span className="is-drawer-close:hidden">Dashboard</span>
               </Link>
             </li>
-            {/* List item */}
-            <li>
+           {
+            role == "user" && <>
+               <li>
               <Link
                 to="/dashboard/my-orders"
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
@@ -92,6 +93,8 @@ const DashboardRoute = () => {
                 <span className="is-drawer-close:hidden">Invoices</span>
               </Link>
             </li>
+            </>
+           }
             {/* Admin Section */}
             {role === "admin" && (
               <>
