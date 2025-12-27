@@ -1,30 +1,40 @@
 import React from "react";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { useForm } from "react-hook-form";
-import useAuth from "../../Hooks/useAuth";
+// import useAuth from "../../Hooks/useAuth";
 import Swal from "sweetalert2";
+import useAuth from "../../Hooks/useAuth";
 
 const EditProfile = () => {
-  const { user } = useAuth();
+  const { updateUserProfile, user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const { handleSubmit, register, reset } = useForm();
   const handleEdit = async (data) => {
-    const update = {
-      email: user.email, // send user email
-      displayName: data.displayName,
-      password: data.password,
-    };
-    const res = await axiosSecure.patch("/user/profile", update);
-    reset({
-      displayName: data.displayName,
-    });
-    Swal.fire({
-      title: "Drag me!",
-      icon: "success",
-      draggable: true,
-    });
-    return res.data;
-  };
+
+  await updateUserProfile({
+    displayName: data.displayName,
+    photoURL: data.photoURL,
+  });
+
+  const res = await axiosSecure.patch("/user/profile", {
+    email: user?.email,
+    displayName: data.displayName,
+    photoURL: data.photoURL,
+  });
+
+  reset({
+    displayName: data.displayName,
+    photoURL: data.photoURL,
+  });
+
+  Swal.fire({
+    icon: "success",
+    title: "Profile updated",
+  });
+
+  return res.data;
+};
+
   return (
     <div className="w-full max-w-md mx-auto my-8 p-4">
   <h2 className="text-2xl font-bold mb-6 text-center">Edit Profile</h2>
@@ -39,6 +49,17 @@ const EditProfile = () => {
           {...register("displayName")}
           className="input w-full"
           placeholder="Enter your new name"
+          required
+        />
+      </div>
+
+      <div className="flex flex-col gap-2 mt-3">
+        <label className="label text-sm font-medium">Photo URL</label>
+        <input
+          type="text"
+          {...register("photoURL")}
+          className="input w-full"
+          placeholder="Enter your photo url"
           required
         />
       </div>

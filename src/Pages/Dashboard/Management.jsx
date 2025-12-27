@@ -47,7 +47,7 @@ const Management = () => {
     };
     Swal.fire({
       title: "Are you sure?",
-      text: "Give admin role",
+      text: "Remove admin role",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -124,7 +124,7 @@ const Management = () => {
                     <div className="flex items-center gap-3">
                       <div className="avatar">
                         <div className="mask mask-squircle h-12 w-12">
-                          <img src={user.photoUrl} alt="Avatar" />
+                          <img src={user.photoURL} alt="Avatar" />
                         </div>
                       </div>
                       <div className="font-bold">{user.displayName}</div>

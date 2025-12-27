@@ -6,6 +6,7 @@ import useAuth from "../../Hooks/useAuth";
 const UserDashboard = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+
   const { data: stats = [] } = useQuery({
     queryKey: ["stats", user?.email],
     queryFn: async () => {
@@ -15,19 +16,31 @@ const UserDashboard = () => {
       return res.data;
     },
   });
+
+  // Ensure all possible states exist even if count = 0
+  const allStates = [
+    { _id: "deleted", label: "User Deleted Orders" },
+    { _id: "", label: "Show Orders (cancel / active)" },
+  ];
+
+  const fixedStats = allStates.map((state) => {
+    const found = stats.find((s) => s._id === state._id);
+    return { ...state, count: found ? found.count : 0 };
+  });
+
   return (
     <div className="p-4 md:p-6 lg:p-8">
-      <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center">User Dashboard</h2>
+      <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center">
+        User Dashboard
+      </h2>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid w-full grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {stats.map((stat) => (
+          {fixedStats.map((stat) => (
             <div
-              key={stat._id}
+              key={stat._id || stat.label}
               className="stat bg-white dark:bg-gray-800 shadow-lg rounded-xl p-4 hover:scale-105 transform transition duration-300"
             >
-              <div className="stat-figure text-4xl text-primary mb-2">
-                
-              </div>
+              <div className="stat-figure text-4xl text-primary mb-2"></div>
               <div className="stat-title text-gray-500 dark:text-gray-400 text-sm">
                 {stat.label}
               </div>

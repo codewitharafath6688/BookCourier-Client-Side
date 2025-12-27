@@ -8,7 +8,7 @@ const Orders = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const { data: orders = [], refetch } = useQuery({
-    queryKey: ["orders", user?.email],
+    queryKey: ["orders", user.email],
     queryFn: async () => {
       const res = await axiosSecure.get(
         `/librarins/orders?email=${user.email}`
@@ -48,8 +48,9 @@ const Orders = () => {
       });
   };
   const visibleOrders = orders.filter(
-    (order) => order.userOrderStatus !== "deleted"
+    (order) => order.librarianOrderStatus !== "deleted"
   );
+  console.log(visibleOrders);
   return (
     <div>
       <h2 className="text-xl font-semibold ml-2 mt-2 mb-2">

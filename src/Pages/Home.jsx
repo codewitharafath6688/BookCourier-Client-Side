@@ -3,6 +3,9 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Link } from "react-router";
 import LatestBooks from "../Layout/LatestBooks";
+import Review from "../Layout/Review";
+
+const promiseReview = fetch('/reviews.json').then(res => res.json());
 
 const Home = () => {
   return (
@@ -63,6 +66,7 @@ const Home = () => {
       </div>
     </div>
   </div>
+  <Review promiseReview={promiseReview}></Review>
 </div>
 
   );

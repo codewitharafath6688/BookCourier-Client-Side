@@ -8,7 +8,7 @@ const LatestBooks = () => {
   const { data: books = [] } = useQuery({
     queryKey: ["books", "published"],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/books`);
+      const res = await axiosSecure.get('/books');
       return res.data;
     },
   });

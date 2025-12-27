@@ -45,86 +45,119 @@ const ViewDetails = () => {
     });
   };
   return (
-    <div className="-mt-6">
-      <div className="hero bg-base-200 min-h-screen">
-        <div className="hero-content w-full flex-col lg:flex-row gap-8">
+    <div className="my-1">
+      {/* HERO SECTION */}
+      <div className="hero bg-base-200 min-h-screen px-2 sm:px-6">
+        <div className="hero-content w-full flex-col lg:flex-row gap-6 lg:gap-10">
+          {/* IMAGE */}
           <img
             src={book?.bookImageUrl}
-            className="w-full lg:w-1/2 h-125 object-fill  rounded-lg shadow-2xl"
+            alt={book?.bookName}
+            className="
+          w-full 
+          lg:w-1/2 
+          max-h-[350px] sm:max-h-[450px] lg:max-h-[520px]
+          object-contain 
+          rounded-lg 
+          shadow-2xl
+        "
           />
-          <div className="lg:w-1/2">
-            <h1 className="text-5xl font-bold">{book?.bookName}</h1>
-            <p className="my-4 text-xl">{book?.authorName}</p>
-            <p> Price: ${book?.price}</p>
-            <p className="mt-2">
-              Publish Date: {new Date(book?.createdAt).toLocaleString()}
+
+          {/* CONTENT */}
+          <div className="w-full lg:w-1/2 text-center lg:text-left">
+            <h1 className="text-xl sm:text-3xl lg:text-5xl font-bold">
+              {book?.bookName}
+            </h1>
+
+            <p className="mt-2 sm:mt-4 text-sm sm:text-lg lg:text-xl">
+              {book?.authorName}
             </p>
+
+            <p className="mt-2 text-sm sm:text-base">
+              <span className="font-semibold">Price:</span> ${book?.price}
+            </p>
+
+            <p className="mt-1 text-xs sm:text-sm">
+              <span className="font-semibold">Publish Date:</span>{" "}
+              {new Date(book?.createdAt).toLocaleDateString()}
+            </p>
+
             <button
               onClick={() => handleBuy(book)}
-              className="btn btn-primary mt-3"
+              className="
+            btn btn-primary 
+            btn-sm sm:btn-md 
+            mt-4
+          "
             >
               Buy
             </button>
           </div>
         </div>
       </div>
-      {/* Open the modal using document.getElementById('ID').showModal() method */}
-      <dialog ref={buyRefModal} className="modal modal-bottom sm:modal-middle">
-        <div className="modal-box">
-          <p className="py-4 text-xl">Fill up this to get this book.</p>
-          <div className="modal-action">
-            <form
-              onSubmit={handleSubmit(handleGetBook)}
-              className="w-250, mx-auto"
-            >
-              <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
-                <legend className="fieldset-legend">Place Order</legend>
 
-                <label className="label">Name</label>
+      {/* MODAL */}
+      <dialog
+        ref={buyRefModal}
+        className="modal modal-bottom sm:modal-middle px-2"
+      >
+        <div className="modal-box w-full max-w-xs sm:max-w-md p-3 sm:p-6">
+          <p className="py-2 text-xs sm:text-lg text-center">
+            Fill up this to get this book.
+          </p>
+
+          <div className="modal-action justify-center">
+            <form onSubmit={handleSubmit(handleGetBook)} className="w-full">
+              <fieldset className="fieldset bg-base-200 border-base-300 rounded-box border p-3 sm:p-4 text-xs sm:text-sm">
+                <legend className="fieldset-legend text-xs sm:text-sm">
+                  Place Order
+                </legend>
+
+                <label className="label text-xs sm:text-sm">Name</label>
                 <input
                   type="text"
                   {...register("name")}
                   defaultValue={user?.displayName}
-                  className="input"
+                  className="input input-sm sm:input-md w-full"
                   readOnly
                 />
 
-                <label className="label">Email</label>
+                <label className="label text-xs sm:text-sm">Email</label>
                 <input
                   type="email"
                   {...register("email")}
                   defaultValue={user?.email}
-                  className="input"
+                  className="input input-sm sm:input-md w-full"
                   readOnly
                 />
 
-                <label className="label">Phone Number</label>
+                <label className="label text-xs sm:text-sm">Phone Number</label>
                 <input
                   type="number"
                   {...register("phoneNumber")}
-                  className="input"
+                  className="input input-sm sm:input-md w-full"
                   placeholder="Phone Number"
                   required
                 />
 
-                <label className="label">Address</label>
+                <label className="label text-xs sm:text-sm">Address</label>
                 <input
                   type="text"
                   {...register("address")}
-                  className="input"
+                  className="input input-sm sm:input-md w-full"
                   placeholder="Address"
                   required
                 />
 
-                <button className="btn btn-neutral mt-4">
+                <button className="btn btn-neutral btn-sm sm:btn-md mt-3 w-full">
                   Place Your Order
                 </button>
               </fieldset>
-              {/* if there is a button in form, it will close the modal */}
+
               <button
-                onClick={() => handleClose()}
+                onClick={handleClose}
                 type="button"
-                className="btn mt-3"
+                className="btn btn-sm sm:btn-md mt-3 w-full"
               >
                 Close
               </button>
