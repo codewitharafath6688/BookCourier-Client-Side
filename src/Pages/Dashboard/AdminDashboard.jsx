@@ -31,14 +31,14 @@ const AdminDashboard = () => {
   });
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-6 text-white sm:px-6 lg:px-8">
-      <h2 className="text-3xl text-center font-bold mt-5 mb-9 text-gray-200">Admin Dashboard</h2>
+    <div className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
+      <h2 className="text-3xl text-center font-bold mt-5 mb-9">Admin Dashboard</h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {fixedStats.map((stat) => (
           <div
             key={stat._id}
-            className="bg-gray-900 dark:bg-gray-800 shadow-lg rounded-xl p-6 hover:scale-105 transform transition duration-300 flex flex-col justify-between"
+            className="bg-gray-900 dark:bg-gray-800 text-white shadow-lg rounded-xl p-6 hover:scale-105 transform transition duration-300 flex flex-col justify-between"
           >
             <div className="flex items-center space-x-4">
               <div className="text-4xl text-indigo-400">{stat.icon}</div>

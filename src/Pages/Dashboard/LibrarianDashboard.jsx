@@ -52,7 +52,7 @@ const LibrarianDashboard = () => {
           {fixedStats.map((stat) => (
             <div
               key={stat._id || stat.label}
-              className="stat bg-white dark:bg-gray-800 shadow-lg rounded-xl p-4 hover:scale-105 transform transition duration-300"
+              className="stat bg-white text-white dark:bg-gray-800 shadow-lg rounded-xl p-4 hover:scale-105 transform transition duration-300"
             >
               <div className="stat-figure text-4xl text-primary mb-2">{stat.icon}</div>
               <div className="stat-title text-gray-500 dark:text-gray-400 text-sm">{stat.label}</div>
@@ -68,7 +68,7 @@ const LibrarianDashboard = () => {
           {fixedBookStats.map((stat) => (
             <div
               key={stat.label}
-              className="stat bg-white dark:bg-gray-800 shadow-lg rounded-xl p-4 hover:scale-105 transform transition duration-300"
+              className="stat bg-white text-white dark:bg-gray-800 shadow-lg rounded-xl p-4 hover:scale-105 transform transition duration-300"
             >
               <div className="stat-figure text-4xl text-primary mb-2">{stat.icon}</div>
               <div className="stat-title text-gray-500 dark:text-gray-400 text-sm">{stat.label}</div>
