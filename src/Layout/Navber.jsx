@@ -17,40 +17,66 @@ const Navber = () => {
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme(theme === "light" ? "dark" : "light");
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
   };
+
+  const navLinkClass = ({ isActive }) =>
+    `
+    px-3 py-2 rounded-lg text-sm font-medium
+    transition-colors
+    ${
+      isActive
+        ? "text-primary bg-primary/10"
+        : "text-base-content/70 hover:text-primary hover:bg-base-200/60"
+    }
+  `;
 
   const links = (
     <>
       <li>
-        <NavLink to="/">Home</NavLink>
+        <NavLink to="/" className={navLinkClass}>
+          Home
+        </NavLink>
       </li>
       <li>
-        <NavLink to="/all-books">All Books</NavLink>
+        <NavLink to="/all-books" className={navLinkClass}>
+          All Books
+        </NavLink>
       </li>
       <li>
-        <NavLink to="/coverage">Coverage</NavLink>
+        <NavLink to="/coverage" className={navLinkClass}>
+          Coverage
+        </NavLink>
       </li>
       <li>
-        <NavLink to="/librarian">Be a Librarian</NavLink>
+        <NavLink to="/librarian" className={navLinkClass}>
+          Be a Librarian
+        </NavLink>
       </li>
       {user && (
         <li>
-          <NavLink to="/dashboard">Dashboard</NavLink>
+          <NavLink to="/dashboard" className={navLinkClass}>
+            Dashboard
+          </NavLink>
         </li>
       )}
     </>
   );
 
   const handleLogOut = () => {
-    logOutUser()
-      .then((result) => console.log(result.user))
-      .catch((error) => console.log(error.message));
+    logOutUser().catch(() => {});
   };
 
   return (
-    <div className="navbar bg-base-100 text-base-content shadow-sm px-2 sm:px-4">
-      {/* ================= Navbar Start ================= */}
+    <div
+      className="
+      navbar sticky top-0 z-50
+      bg-base-100/80 backdrop-blur-md
+      border-b border-base-200
+      px-2 sm:px-4
+    "
+    >
+      {/* LEFT */}
       <div className="navbar-start">
         {/* Mobile Menu */}
         <div className="dropdown">
@@ -72,7 +98,10 @@ const Navber = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+            className="
+              menu menu-sm dropdown-content mt-3 p-2
+              bg-base-100 rounded-2xl shadow-lg w-56
+            "
           >
             {links}
           </ul>
@@ -80,22 +109,25 @@ const Navber = () => {
 
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 ml-1">
-          <GiBookshelf className="text-red-500" />
-          <h2 className="text-xl sm:text-2xl font-bold  sm:block">
-            BookCourier
+          <GiBookshelf className="text-primary text-2xl" />
+          <h2 className="text-xl sm:text-2xl font-semibold tracking-tight">
+            Book<span className="text-primary">Courier</span>
           </h2>
         </Link>
       </div>
 
-      {/* ================= Navbar Center ================= */}
+      {/* CENTER */}
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">{links}</ul>
+        <ul className="menu menu-horizontal gap-1">{links}</ul>
       </div>
 
-      {/* ================= Navbar End ================= */}
+      {/* RIGHT */}
       <div className="navbar-end flex items-center gap-1 sm:gap-2">
-        {/* Theme Toggle */}
-        <button onClick={toggleTheme} className="btn btn-ghost btn-sm">
+        {/* Theme */}
+        <button
+          onClick={toggleTheme}
+          className="btn btn-ghost btn-sm rounded-full"
+        >
           {theme === "light" ? (
             <FaMoon />
           ) : (
@@ -103,20 +135,26 @@ const Navber = () => {
           )}
         </button>
 
-        {/* Desktop Auth Buttons */}
-        <div className="hidden sm:flex gap-2">
+        {/* Auth */}
+        <div className="hidden sm:flex items-center gap-2">
           {user ? (
-            <button onClick={handleLogOut} className="btn btn-primary btn-sm">
+            <button
+              onClick={handleLogOut}
+              className="btn btn-primary btn-sm rounded-full px-4"
+            >
               Sign Out
             </button>
           ) : (
             <>
-              <Link to="/user-access/login" className="btn btn-outline btn-sm">
+              <Link
+                to="/user-access/login"
+                className="btn btn-ghost btn-sm rounded-full px-4"
+              >
                 Login
               </Link>
               <Link
                 to="/user-access/register"
-                className="btn btn-primary btn-sm"
+                className="btn btn-primary btn-sm rounded-full px-4"
               >
                 Sign Up
               </Link>
@@ -124,14 +162,17 @@ const Navber = () => {
           )}
         </div>
 
-        {/* Mobile Auth Dropdown */}
+        {/* Mobile Auth */}
         <div className="dropdown dropdown-end sm:hidden">
-          <label tabIndex={0} className="btn btn-ghost btn-sm">
+          <label tabIndex={0} className="btn btn-ghost btn-sm rounded-full">
             ☰
           </label>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-40"
+            className="
+              menu menu-sm dropdown-content mt-3 p-2
+              bg-base-100 rounded-2xl shadow-lg w-44
+            "
           >
             {user ? (
               <li>

@@ -5,54 +5,76 @@ import { Link } from "react-router";
 
 const LatestBooks = () => {
   const axiosSecure = useAxiosSecure();
+
   const { data: books = [] } = useQuery({
     queryKey: ["books", "published"],
     queryFn: async () => {
-      const res = await axiosSecure.get('/books');
+      const res = await axiosSecure.get("/books");
       return res.data;
     },
   });
-  return (
-    <div className="mt-10 text-white flex flex-col items-center gap-8 px-4">
-      <h2 className="text-2xl font-bold text-center">Latest Books</h2>
 
-      {/* Responsive grid: 1 column mobile, 2 tablet, 3 desktop */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-[1200px]">
+  return (
+    <section className="mt-14 px-4">
+      {/* Section Header */}
+      <div className="text-center mb-10">
+        <h2 className="text-2xl sm:text-3xl font-bold text-base-content">
+  Latest Books
+</h2>
+<div className="w-24 h-1 bg-primary mx-auto mt-4 rounded-full" />
+        <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+          Discover our most recently added books
+        </p>
+      </div>
+
+      {/* Grid */}
+      <div className="mx-auto max-w-7xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {books.slice(0, 6).map((book) => (
           <div
             key={book._id}
-            className="bg-[#110a0b] shadow-md hover:shadow-lg rounded-xl overflow-hidden transition-all duration-300 flex flex-col"
+            className="
+              group bg-white/70 dark:bg-[#110a0b]/30
+              rounded-2xl overflow-hidden
+              border border-gray-200 dark:border-white/10
+              transition-all duration-300
+              hover:shadow-xl
+              flex flex-col
+            "
           >
             {/* Image */}
-            <figure className="w-full h-64 overflow-hidden">
+            <figure className="relative w-full h-60 overflow-hidden">
               <img
                 src={book.bookImageUrl}
                 alt={book.bookName}
-                className="w-full h-full object-cover"
+                className="
+                  w-full h-full object-cover
+                  transition-transform duration-500
+                  group-hover:scale-105
+                "
               />
             </figure>
 
-            {/* Info */}
-            <div className="p-4 flex flex-col justify-between flex-1">
-              <h2 className="text-base font-semibold line-clamp-2">
+            {/* Content */}
+            <div className="p-5 flex flex-col flex-1">
+              <h3 className="text-base font-semibold  text-base-content line-clamp-2">
                 {book.bookName}
-              </h2>
-              <p className="mt-2 font-semibold text-primary">
-                Price: ${book.price}
-              </p>
-              <div className="mt-4 flex justify-end">
+              </h3>
+
+              <p className="mt-2 text-primary font-semibold">${book.price}</p>
+
+              <div className="mt-auto flex justify-end pt-4">
                 <Link
                   to={`/view-details/${book._id}`}
-                  className="btn btn-primary btn-sm"
+                  className="btn btn-primary btn-sm rounded-full px-5"
                 >
-                  View
+                  View Details
                 </Link>
               </div>
             </div>
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 

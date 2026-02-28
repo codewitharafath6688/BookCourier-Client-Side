@@ -39,24 +39,63 @@ const Coverage = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto mt-8 my-5 px-4">
-      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-center">
-        Our service centers are available in 64 districts
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    {/* Section Header */}
+    <div className="text-center space-y-3">
+      <h2 className="text-2xl sm:text-3xl  md:text-4xl font-bold text-base-content">
+        Nationwide Coverage
       </h2>
+      <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-sm sm:text-base">
+        BookCourier service centers are available across all 64 districts of Bangladesh.
+        Fast, secure and reliable delivery everywhere.
+      </p>
+    </div>
 
-      <form onSubmit={handleSearch} className="mt-6 flex justify-center">
-        <label className="input input-bordered flex items-center gap-2 w-full sm:w-96">
-          <input
-            type="search"
-            name="location"
-            required
-            placeholder="Search district"
-            className="grow"
-          />
-        </label>
-      </form>
+    {/* Search Box */}
+    <form
+      onSubmit={handleSearch}
+      className="mt-8 flex justify-center"
+    >
+      <div className="
+        flex items-center gap-2
+        w-full sm:w-[420px]
+        bg-white dark:bg-[#1d232a]/70
+        border border-gray-300 dark:border-white/10
+        rounded-full px-4 py-2
+        shadow-sm
+        focus-within:ring-2 focus-within:ring-primary
+        transition-all
+      ">
+        <input
+          type="search"
+          name="location"
+          required
+          placeholder="Search your district..."
+          className="
+            bg-transparent flex-1 outline-none
+            text-gray-800 dark:text-white
+            placeholder-gray-400
+          "
+        />
+        <button
+          type="submit"
+          className="text-sm font-medium text-primary hover:opacity-80 transition"
+        >
+          Search
+        </button>
+      </div>
+    </form>
 
-      <div className="border rounded-lg h-[300px] sm:h-[400px] md:h-[500px] w-full mt-6 overflow-hidden">
+    {/* Map Container */}
+    <div className="
+      mt-10
+      rounded-3xl overflow-hidden
+      shadow-lg
+      bg-white dark:bg-[#110a0b]
+      relative z-0
+    ">
+      <div className="h-[320px] sm:h-[450px] md:h-[550px] w-full">
         <MapContainer
           className="h-full w-full"
           center={position}
@@ -65,7 +104,7 @@ const Coverage = () => {
           scrollWheelZoom={false}
         >
           <TileLayer
-            attribution='&copy; OpenStreetMap contributors'
+            attribution="&copy; OpenStreetMap contributors"
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
 
@@ -78,17 +117,22 @@ const Coverage = () => {
               ]}
             >
               <Popup>
-                <strong>{serviceCenter.district}</strong>
-                <br />
-                Service Areas:{" "}
-                {serviceCenter.covered_area.join(", ")}
+                <div className="text-sm">
+                  <strong className="text-gray-900">
+                    {serviceCenter.district}
+                  </strong>
+                  <p className="text-gray-600 mt-1">
+                    {serviceCenter.covered_area.join(", ")}
+                  </p>
+                </div>
               </Popup>
             </Marker>
           ))}
         </MapContainer>
       </div>
     </div>
-  );
+  </div>
+);
 };
 
 export default Coverage;

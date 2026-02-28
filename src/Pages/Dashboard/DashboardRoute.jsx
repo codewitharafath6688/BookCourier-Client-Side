@@ -1,190 +1,170 @@
 import React from "react";
-import { FaAddressBook, FaUserEdit } from "react-icons/fa";
-import { GiBookshelf } from "react-icons/gi";
-import { LiaFileInvoiceSolid } from "react-icons/lia";
-import { MdBookmarkAdd, MdOutlineLocalLibrary, MdOutlineMenuBook, MdSpaceDashboard } from "react-icons/md";
-import { PiUsersThreeFill } from "react-icons/pi";
-import { TfiShoppingCartFull } from "react-icons/tfi";
 import { Link, Outlet } from "react-router";
-import useRole from "../../Hooks/useRole";
+import { GiBookshelf } from "react-icons/gi";
+import { MdSpaceDashboard, MdOutlineLocalLibrary, MdOutlineMenuBook, MdBookmarkAdd } from "react-icons/md";
+import { TfiShoppingCartFull } from "react-icons/tfi";
+import { LiaFileInvoiceSolid } from "react-icons/lia";
+import { FaUserEdit, FaAddressBook } from "react-icons/fa";
+import { PiUsersThreeFill } from "react-icons/pi";
 import { LuSwatchBook } from "react-icons/lu";
+import useRole from "../../Hooks/useRole";
 
 const DashboardRoute = () => {
   const { role } = useRole();
+
   return (
-    <div className="drawer lg:drawer-open">
+    <div className="drawer lg:drawer-open min-h-screen">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content">
-        {/* Navbar */}
-        <nav className="navbar w-full bg-base-300">
+
+      {/* ================= CONTENT ================= */}
+      <div className="drawer-content flex flex-col">
+
+        {/* ===== DASHBOARD NAVBAR ===== */}
+        <nav  className="
+    navbar w-full
+    bg-white dark:bg-gradient-to-r dark:from-[#020617] dark:to-[#0f172a]
+    border-b border-gray-200 dark:border-white/10
+    px-4
+  ">
           <label
             htmlFor="my-drawer-4"
-            aria-label="open sidebar"
-            className="btn btn-square btn-ghost"
+            className="btn btn-ghost btn-square lg:hidden"
           >
-            {/* Sidebar toggle icon */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
-              strokeLinejoin="round"
-              strokeLinecap="round"
               strokeWidth="2"
-              fill="none"
               stroke="currentColor"
-              className="my-1.5 inline-block size-4"
+              fill="none"
+              className="size-5"
             >
-              <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path>
-              <path d="M9 4v16"></path>
-              <path d="M14 10l2 2l-2 2"></path>
+              <path d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </label>
-          <div className="px-4">
-            <Link className="flex gap-2 items-center justify-center" to="/">
-              <GiBookshelf className="text-xl text-red-500" />
-              <h2 className="text-2xl">BookCourier</h2>
-            </Link>
-          </div>
+
+          <Link to="/" className="flex items-center gap-2 ml-2">
+            <GiBookshelf className="text-xl text-primary" />
+            <span className="text-lg font-semibold text-white tracking-wide">
+              Book<span className="text-[#605DFF]">Courier</span>
+            </span>
+          </Link>
         </nav>
-        {/* Page content here */}
-        <Outlet></Outlet>
+
+        {/* ===== PAGE CONTENT ===== */}
+        <main className="p-4 md:p-6">
+          <Outlet />
+        </main>
       </div>
 
-      <div className="drawer-side is-drawer-close:overflow-visible">
-        <label
-          htmlFor="my-drawer-4"
-          aria-label="close sidebar"
-          className="drawer-overlay"
-        ></label>
-        <div className="flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64">
-          {/* Sidebar content here */}
-          <ul className="menu w-full grow">
+      {/* ================= SIDEBAR ================= */}
+      <div className="drawer-side">
+        <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
+
+        <aside className="
+    w-64 min-h-full
+    bg-white dark:bg-gradient-to-b dark:from-[#020617] dark:to-[#020617]
+    border-r border-gray-200 dark:border-white/10
+  ">
+
+          {/* ===== SIDEBAR BRAND ===== */}
+          <div className="px-4 py-5 border-b border-gray-200 dark:border-white/10">
+  <div className="flex items-center gap-3">
+    <GiBookshelf className="text-2xl text-primary" />
+    <div>
+      
+      <p className="text-xl font-bold text-gray-500 dark:text-gray-400 capitalize">
+        {role} dashboard
+      </p>
+    </div>
+  </div>
+</div>
+
+          {/* ===== MENU ===== */}
+          <ul className="menu px-3 py-4 text-sm text-gray-700 dark:text-gray-200">
+
             <li>
-              <Link
-                to="/dashboard"
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Dashboard"
-              >
-                {/* Settings icon */}
+              <Link to="/dashboard" className="rounded-lg">
                 <MdSpaceDashboard />
-                <span className="is-drawer-close:hidden">Dashboard</span>
+                Dashboard
               </Link>
             </li>
-           {
-            role == "user" && <>
-               <li>
-              <Link
-                to="/dashboard/my-orders"
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="My Orders"
-              >
-                {/* Settings icon */}
-                <TfiShoppingCartFull />
-                <span className="is-drawer-close:hidden">My Orders</span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/dashboard/invoices"
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Invoices"
-              >
-                {/* Settings icon */}
-                <LiaFileInvoiceSolid />
-                <span className="is-drawer-close:hidden">Invoices</span>
-              </Link>
-            </li>
-            </>
-           }
-            {/* Admin Section */}
+
+            {/* ===== USER ===== */}
+            {role === "user" && (
+              <>
+                <li>
+                  <Link to="/dashboard/my-orders" className="rounded-lg">
+                    <TfiShoppingCartFull />
+                    My Orders
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/dashboard/invoices" className="rounded-lg">
+                    <LiaFileInvoiceSolid />
+                    Invoices
+                  </Link>
+                </li>
+              </>
+            )}
+
+            {/* ===== LIBRARIAN ===== */}
+            {role === "librarian" && (
+              <>
+                <li>
+                  <Link to="/dashboard/add-book" className="rounded-lg">
+                    <MdBookmarkAdd />
+                    Add Book
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/dashboard/my-books" className="rounded-lg">
+                    <FaAddressBook />
+                    My Books
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/dashboard/librarian-orders" className="rounded-lg">
+                    <LuSwatchBook />
+                    Orders
+                  </Link>
+                </li>
+              </>
+            )}
+
+            {/* ===== ADMIN ===== */}
             {role === "admin" && (
               <>
                 <li>
-                  <Link
-                    to="/dashboard/librarians-approval"
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="Librarian's Approval"
-                  >
-                    {/* Settings icon */}
+                  <Link to="/dashboard/librarians-approval" className="rounded-lg">
                     <MdOutlineLocalLibrary />
-                    <span className="is-drawer-close:hidden">
-                      Librarian's Approval
-                    </span>
+                    Librarian Approval
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to="/dashboard/management"
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="Users Active Role"
-                  >
-                    {/* Settings icon */}
+                  <Link to="/dashboard/management" className="rounded-lg">
                     <PiUsersThreeFill />
-                    <span className="is-drawer-close:hidden">
-                      Users Active Role
-                    </span>
+                    User Roles
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to="/dashboard/manage-books"
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="Manage Books"
-                  >
-                    {/* Settings icon */}
+                  <Link to="/dashboard/manage-books" className="rounded-lg">
                     <MdOutlineMenuBook />
-                    <span className="is-drawer-close:hidden">
-                      Manage Books
-                    </span>
+                    Manage Books
                   </Link>
                 </li>
               </>
             )}
-            {role == "librarian" && (
-              <>
-                <li>
-                  <Link
-                    to="/dashboard/add-book"
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="Add Book"
-                  >
-                    <MdBookmarkAdd />
-                    <span className="is-drawer-close:hidden">Add Book</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/dashboard/my-books"
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="My Books"
-                  >
-                    <FaAddressBook />
-                    <span className="is-drawer-close:hidden">My Books</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/dashboard/librarian-orders"
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="Orders"
-                  >
-                    <LuSwatchBook />
-                    <span className="is-drawer-close:hidden">Oders</span>
-                  </Link>
-                </li>
-              </>
-            )}
-            <li>
-              <Link
-                to="/dashboard/edit-profile"
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Edit Profile"
-              >
+
+            {/* ===== COMMON ===== */}
+            <li className="mt-2">
+              <Link to="/dashboard/edit-profile" className="rounded-lg">
                 <FaUserEdit />
-                <span className="is-drawer-close:hidden">Edit Profile</span>
+                Edit Profile
               </Link>
             </li>
+
           </ul>
-        </div>
+        </aside>
       </div>
     </div>
   );

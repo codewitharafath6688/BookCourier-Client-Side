@@ -32,7 +32,7 @@ const AllBooks = () => {
     <div className="p-6">
       <div className="flex flex-col gap-4 mb-6 lg:grid lg:grid-cols-3 lg:items-center">
         {/* Left: Title */}
-        <h2 className="text-xl sm:text-2xl font-bold text-white text-center lg:text-left">
+        <h2 className="text-xl sm:text-2xl font-bold text-base-content text-center lg:text-left">
           All Books ({books.length})
         </h2>
 
@@ -69,7 +69,7 @@ const AllBooks = () => {
           <select
             defaultValue=""
             onChange={handleSort}
-            className="select select-bordered bg-[#1d232a] text-white w-full sm:w-56"
+            className="select select-bordered font-bold bg-[#1d232a]/70 text-white w-full sm:w-56"
           >
             <option value="" disabled>
               Select Your Sort
@@ -83,32 +83,47 @@ const AllBooks = () => {
       <div className="grid grid-cols-1 text-white sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {books.map((book) => (
           <div
-            key={book._id}
-            className="card bg-[#110a0b] shadow-md hover:shadow-lg transition"
-          >
-            {/* Image full width, same height */}
-            <figure className="overflow-hidden rounded-t-xl">
-              <img
-                src={book.bookImageUrl}
-                alt={book.bookName}
-                className="w-full h-64 object-cover"
-              />
-            </figure>
-
-            {/* Info */}
-            <div className="card-body p-4">
-              <h2 className="card-title text-base">{book.bookName}</h2>
-              <p className="font-semibold text-primary">Price: ${book.price}</p>
-              <div className="card-actions justify-end">
-                <Link
-                  to={`/view-details/${book._id}`}
-                  className="btn btn-primary btn-sm"
-                >
-                  View
-                </Link>
-              </div>
-            </div>
-          </div>
+                      key={book._id}
+                      className="
+                        group bg-white/70 dark:bg-[#110a0b]/30
+                        rounded-2xl overflow-hidden
+                        border border-gray-200 dark:border-white/10
+                        transition-all duration-300
+                        hover:shadow-xl
+                        flex flex-col
+                      "
+                    >
+                      {/* Image */}
+                      <figure className="relative w-full h-60 overflow-hidden">
+                        <img
+                          src={book.bookImageUrl}
+                          alt={book.bookName}
+                          className="
+                            w-full h-full object-cover
+                            transition-transform duration-500
+                            group-hover:scale-105
+                          "
+                        />
+                      </figure>
+          
+                      {/* Content */}
+                      <div className="p-5 flex flex-col flex-1">
+                        <h3 className="text-base font-semibold  text-base-content line-clamp-2">
+                          {book.bookName}
+                        </h3>
+          
+                        <p className="mt-2 text-primary font-semibold">${book.price}</p>
+          
+                        <div className="mt-auto flex justify-end pt-4">
+                          <Link
+                            to={`/view-details/${book._id}`}
+                            className="btn btn-primary btn-sm rounded-full px-5"
+                          >
+                            View Details
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
         ))}
       </div>
     </div>

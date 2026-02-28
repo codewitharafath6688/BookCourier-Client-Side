@@ -45,7 +45,7 @@ const Librarian = () => {
       });
   };
   return (
-    <div className="max-w-5xl mx-auto mt-8 px-4">
+    <div className="max-w-5xl mx-auto  mt-8 px-4">
       <div className="card bg-base-100 shadow-xl">
         <div className="card-body">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-6">
