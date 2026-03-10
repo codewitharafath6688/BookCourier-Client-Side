@@ -5,12 +5,16 @@ import Forbidden from "../Pages/Forbidden";
 
 const LibrarianRoute = ({ children }) => {
   const { loading } = useAuth();
-  const { role, isloading } = useRole();
-  if (loading || isloading) {
-    return <span className="loading loading-spinner loading-xl"></span>;
+  const { role, isLoading } = useRole(); // Fixed: was `isloading` (typo), now `isLoading`
+  if (loading || isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <span className="loading loading-spinner loading-lg"></span>
+      </div>
+    );
   }
   if (role !== "librarian") {
-    return <Forbidden></Forbidden>;
+    return <Forbidden />;
   }
   return children;
 };
